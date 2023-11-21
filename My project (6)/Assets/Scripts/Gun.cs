@@ -8,7 +8,7 @@ public class Gun : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private GunData gunData;
-    /*[SerializeField] private Transform cam;*/
+    [SerializeField] private Transform cam;
 
     float timeSinceLastShot;
 
@@ -45,7 +45,7 @@ public class Gun : MonoBehaviour
         {
             if (CanShoot())
             {
-                if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hitInfo, gunData.maxDistance))
+                if (Physics.Raycast(cam.position, cam.forward, out RaycastHit hitInfo, gunData.maxDistance))
                 {
                     IDamageable damageable = hitInfo.transform.GetComponent<IDamageable>();
                     damageable?.TakeDamage(gunData.damage);
