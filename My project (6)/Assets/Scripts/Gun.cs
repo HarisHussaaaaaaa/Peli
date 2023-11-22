@@ -8,7 +8,10 @@ public class Gun : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private GunData gunData;
-    [SerializeField] private Transform cam;
+    /*[SerializeField] private Transform cam;*/
+    [SerializeField] private Transform launchPoint;
+    [SerializeField] private GameObject projectile;
+    [SerializeField] private float launchVelocity;
 
     float timeSinceLastShot;
 
@@ -45,10 +48,12 @@ public class Gun : MonoBehaviour
         {
             if (CanShoot())
             {
-                if (Physics.Raycast(cam.position, cam.forward, out RaycastHit hitInfo, gunData.maxDistance))
+                if (Input.GetButtonDown("Fire1"/*Physics.Raycast(cam.position, cam.forward, out RaycastHit hitInfo, gunData.maxDistance*/))
                 {
-                    IDamageable damageable = hitInfo.transform.GetComponent<IDamageable>();
-                    damageable?.TakeDamage(gunData.damage);
+                    /*IDamageable damageable = hitInfo.transform.GetComponent<IDamageable>();*/
+                    /*damageable?.TakeDamage(gunData.damage);*/
+                    var _projectile = Instantiate(projectile, launchPoint.position, launchPoint.rotation);
+                    _projectile.GetComponent<Rigidbody>().velocity = launchPoint.forward * launchVelocity;
                 }
 
                 gunData.currentAmmo--;
